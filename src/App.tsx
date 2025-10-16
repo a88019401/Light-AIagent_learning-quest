@@ -314,7 +314,7 @@ export default function App() {
 
   // 資料與進度
   const unit: UnitConfig = UNITS.find((u) => u.id === unitId)!;
-  const { progress, addXP, patchUnit, awardBadge, reset, reportGrammarTetris } =
+  const { progress, addXP, patchUnit, awardBadge, reportGrammarTetris } =
     useProgress();
   const uProg = progress.byUnit[unitId];
   // ✅ 監聽 grammar-tetris-report 事件，交給 progress 判斷是否要頒發 SUPER_GRAMMAR_EXPERT
@@ -490,15 +490,15 @@ export default function App() {
   </div>
   <div className="flex items-center gap-2">
     {/* 這三顆被鎖，顯示灰霧「尚未開放」，也擋掉點擊 */}
-    <LockedTab>
-      <TabButton active={false}>學習區</TabButton>
-    </LockedTab>
-    <LockedTab>
-      <TabButton active={false}> 挑戰區 </TabButton>
-    </LockedTab>
-    <LockedTab>
-      <TabButton active={false}> 獎章區 </TabButton>
-    </LockedTab>
+<LockedTab>
+  <TabButton active={false} onClick={() => {}}>學習區</TabButton>
+</LockedTab>
+<LockedTab>
+  <TabButton active={false} onClick={() => {}}>挑戰區</TabButton>
+</LockedTab>
+<LockedTab>
+  <TabButton active={false} onClick={() => {}}>獎章區</TabButton>
+</LockedTab>
 
     {/* 只有 SRL 可用 */}
     <TabButton active={tab === "srl"} onClick={() => setTab("srl")}>
