@@ -1,266 +1,85 @@
-2025/10/16
-本次規則調整
-貪吃蛇（SnakeChallenge）
+研究主題
 
-無倒數計時：移除全局 totalTime/left 倒數；但仍記錄實際遊玩秒數（開始於按「開始挑戰」，結束於 Game Over/做完所有題）。
+在「遊戲式英語字彙學習」環境中導入AI 對話教練（AI agent），引導學生依 SRL 三階段——前導規劃（Forethought）、歷程監控（Performance）、賽後反思（Self-reflection）——設定目標、監控歷程並生成反思與下輪策略，檢驗其對學習成效與策略使用的影響（Panadero, 2014）。 
+無法判斷網站名稱
 
-結束條件：
+問題意識
 
-撞牆、2) 撞到自己、或 3) 題庫走完（全部題目皆答完）。
+遊戲式學習常能提升學習效果，但成效差異與設計品質相關；適當的任務結構與回饋更能放大效果（Wouters, van Nimwegen, van Oostendorp, & van der Spek, 2013）。
+ResearchGate
 
-題庫與出題：
+多數學習系統未內建 SRL 腳手架，學生欠缺「如何訂目標、如何監控、如何反思」的明確引導；對話式教學代理能以提示與回饋支援這些歷程（Azevedo et al., 2009；Rus et al., 2010）。
+johnnietfeld.com
++1
 
-從 words 建立 deck：shuffle(words).slice(0, min(78, words.length))。
+生成式 AI 進一步讓個別化策略、在地語言介面、任務後回饋更即時可行，但在語言學習＋遊戲情境的實證對照仍少，值得系統化驗證（Panadero, 2014；Wouters et al., 2013）。 
+無法判斷網站名稱
++1
 
-正解不重複：一輪最多 78 題；每題 3 選（1 正解 + 2 誘答，從 pool 排除正解後隨機取）。
+理論基礎
 
-選項位置隨機落在不與蛇重疊的格子上。
+自我調整學習（SRL）循環：學習者在 Forethought 設定目標與策略、在 Performance 自我監控、在 Self-reflection 進行成因歸因與策略調整；循環性帶來長期成長（Panadero, 2014）。
+無法判斷網站名稱
 
-題幹模式可切換：defToTerm（看中文吃英文）或 termToDef（看英文吃中文）。
+教學／對話代理支援 SRL：多代理系統（如 MetaTutor）會在閱讀或任務中提示計畫、監控與反思策略，能改善策略使用與學習歷程品質（Azevedo et al., 2009；Rus et al., 2010）。
+johnnietfeld.com
++1
 
-操作限制：WASD/方向鍵與 D-Pad 皆可；禁止 180° 直接回頭。
+遊戲式學習成效：統合分析顯示，相對於傳統教學，嚴謹設計的遊戲在認知與保留上有小至中等的正效應，語言領域效果尤其顯著（Wouters et al., 2013）。（此研究同時指出多回合學習、與其他教學結合、同儕合作等條件可放大效果。）
+ResearchGate
 
-成績與回報：
+AI 工具應用規劃
 
-每題記錄：round/prompt/promptMode/correctTerm/correctDef/options/selectedTerm/isCorrect/responseTimeMs。
+AI-SRL 對話教練（中文介面）
 
-onFinish(score, usedTime)；onReport({...}) 回傳：title, totalQuestions(=TOTAL), passScore(=TOTAL), totalTime(=usedTime), usedTime, correct, wrong, passed(=correct===TOTAL), logs, wrongByTerm。
+Forethought：蒐集「主題／字數／信心」並產出可操作策略與本輪詞彙清單（JSON 直寫畫面表單與題庫）。
 
-另會 window.dispatchEvent("learning-quest:snake-report", {detail:{ correct, total: TOTAL }})（供頒發「貪吃蛇之王」用）。
+Performance：以 AI 詞彙進行字卡＋口說與貪吃蛇詞彙遊戲；記錄正誤、反應時間、錯誤型態、用時。
 
-UI：
+Self-reflection：在結算畫面呈現本輪成績與錯題明細，並由 AI 生成個別化回饋與下輪策略；整輪對話與行為資料輸出 JSON。
 
-進度條顯示 roundIdx / TOTAL。
+研究指標與工具
 
-移除「通關門檻/倒數時間」的 HUD；結算卡顯示 成績：score / TOTAL 與 耗時 usedSec。
+學習成效：前測／後測／延宕測之字彙測驗。
 
-重新開始 會重置並 重建 deck（重新洗牌）。
+策略使用：採 MSLQ（動機與策略子量表）做量化評估（Pintrich et al., 1991）。
+files.eric.ed.gov
 
-可調參數：speedMs(預設 200ms)、questionMode、growOnCorrect(答對是否加長，預設 true)。
+行為分析：題目層級正確率、反應時間、錯誤分布與回合時長，用於學習軌跡與預測模型（參照遊戲式學習成效之條件性與多回合優勢；Wouters et al., 2013）。
+ResearchGate
 
-徽章（可選擴充）：監聽 snake-report，當 correct ≥ 78 頒發 SNAKE_KING。
+研究設計（建議）
 
-俄羅斯方塊（Grammar Tetris / ReorderSentenceGame）
+準實驗：兩班分組——AI-SRL 組（AI 教練＋SRL 三階段） vs 對照組（同教材與遊戲，但給靜態說明無對話教練）。
 
-題庫範圍：改為使用 unit.grammar.flatMap(g => g.examples ?? []) 全量（不再 slice 限制）。
+介入 3–5 週，每週 1–2 輪 SRL 循環；以 ANCOVA/混合效應模型比組間差異，並以行為資料探討策略—成效關聯。
 
-結束與上報：子元件在回合結束時觸發
-window.dispatchEvent("learning-quest:grammar-tetris-report", { detail: { roundsPlayed, reason } })，其中
+預期成果
 
-reason: "completed" 完成一輪、"no-fit" 無可放位置、"wrong-limit" 錯誤達上限。
+學習成效提升：AI-SRL 組在後測與延宕測的字彙表現顯著優於對照組；行為資料呈現更有效的學習軌跡（多回合漸進改善、錯誤類型聚焦修正）（Wouters et al., 2013）。
+ResearchGate
 
-獎章邏輯：App 監聽上述事件並呼叫 useProgress().reportGrammarTetris(detail)；在 reducer 內 當 reason === "completed" 且 roundsPlayed ≥ 80 頒發 SUPER_GRAMMAR_EXPERT。
+策略品質提升：AI 介入能使目標更具體、策略更多樣且更貼任務；反思文本在歸因與調整層面更成熟（Azevedo et al., 2009；Panadero, 2014）。
+johnnietfeld.com
++1
 
-XP/最佳成績：父層沿用原邏輯：onFinished(score) 加 XP，並更新 grammar.reorderBest。
-2025/10/7 筆記
-學習區 大致上OK了 挑戰區 我固定住json 檔案 然後 讓遊戲完結後會有即時反饋 看錯的題目 跟內容詳解 進行一個學習的動作
+設計準則與開源資源：提供一套可重複的 AI-SRL 腳手架＋遊戲結算整合範式，以及可復用的JSON 日誌結構與研究儀表板，以利後續擴充與再現。
 
-2025/9/19 筆記 
-questionGen.ts的用途是 給 VocabQuiz.tsx和ChallengeRun.tsx製造四選一選擇題用的
-然後 學習區 檔案靠 units.ts 挑戰區 則要靠 public\challenges\unit-1\level-1.json 慢慢建構起來
+參考文獻（APA）
 
+Azevedo, R., Harley, J. M., Trevors, G., Duffy, M., Feyzi-Behnagh, R., Bouchet, F., & Landis, R. S. (2009). Using multiple external representations to support self-regulated learning with MetaTutor. University of Memphis. https://doi.org/10.5555/1989482.1989492
+ （MetaTutor 專案與多代理支援 SRL 的論述與實作） 
+johnnietfeld.com
 
-# 一頁摘要（Executive Summary）
+Panadero, E. (2014). A review of self-regulated learning: Six models and four directions for research. Frontiers in Psychology, 5, 422. https://doi.org/10.3389/fpsyg.2014.00422
+ （開放取用） 
+無法判斷網站名稱
 
-LearningQuest 是一個可模組化的英語學習網站原型，採用 React + TypeScript + Vite + Tailwind v4 打造。整體以「資料驅動」為核心：只要編輯 `src/data/units.ts` 的教材結構，即可替換 6 個單元的單字、文法與課文內容；系統會自動生成小測與挑戰題庫，並記錄學習進度、XP、星等與徽章。挑戰區支援標準 4 選 1 題庫與可嵌入的小遊戲（例如貪吃蛇 Snake）。
+Pintrich, P. R., Smith, D. A., García, T., & McKeachie, W. J. (1991). A manual for the use of the Motivated Strategies for Learning Questionnaire (MSLQ). Ann Arbor, MI: University of Michigan, National Center for Research to Improve Postsecondary Teaching and Learning.（可於 ERIC/相關典藏取得） 
+files.eric.ed.gov
 
----
+Rus, V., D’Mello, S., Hu, X., & Graesser, A. C. (2010). Recent advances in conversational intelligent tutoring systems. In Proceedings of the Twenty-Third International Florida Artificial Intelligence Research Society Conference (FLAIRS).（含 MetaTutor/對話代理技術脈絡，開放 PDF） 
+cs.memphis.edu
 
-# 專案定位與目標
-
-* **定位**：可快速擴充教材與活動的「英語學習平台原型」。
-* **教學目標**：
-
-  1. 提供單字、文法、課文三類內容的互動練習；
-  2. 加入挑戰與徽章機制，提高動機與持續性；
-  3. 以資料結構統一管理教學資源，降低維護成本。
-* **使用情境**：國中英語課、課後自學、補習班練習網站。
-
----
-
-# 系統架構（Technical Overview）
-
-* **核心技術**：Vite（開發/建置）、React + TypeScript、Tailwind CSS v4。
-* **執行流程**：
-
-  1. `index.html` 掛載根節點 `#root`，載入 `src/main.tsx`；
-  2. `main.tsx` 建立 React root 並渲染 `App`；
-  3. `App.tsx` 載入資料與狀態（`useProgress`），切換分頁（學習/挑戰/獎章），渲染各子元件；
-  4. 進度儲存於 `localStorage`，包含各單元星等、XP、徽章等。
-
-## 檔案結構（重點）
-
-```
-src/
-├─ components/
-│  ├─ ArrangeSentencesGame.tsx     # 課文句子排列遊戲
-│  ├─ BadgesView.tsx               # 徽章一覽與解鎖狀態
-│  ├─ ChallengeRun.tsx             # 4 選 1 限時挑戰（每單元 10 題）
-│  ├─ GrammarExplain.tsx           # 文法重點說明
-│  ├─ ReorderSentenceGame.tsx      # 文法「重組句子」
-│  ├─ SnakeChallenge.tsx           # 小遊戲：貪吃蛇（可作為關卡）
-│  ├─ StoryViewer.tsx              # 課文閱讀
-│  ├─ VocabQuiz.tsx                # 單字 4 選 1 小測
-│  ├─ VocabSet.tsx                 # 單字集（翻牌、瀏覽）
-│  └─ ui.tsx                       # 共用 UI（Card、SectionTitle、TabButton）
-│
-├─ data/
-│  └─ units.ts                     # 教材資料（6 單元：單字/文法/課文）
-│
-├─ lib/
-│  └─ questionGen.ts               # 題目自動生成器（單字/文法/課文/挑戰）
-│
-├─ state/
-│  └─ progress.ts                  # 進度與徽章邏輯（useProgress hook）
-│
-├─ types.ts                        # 型別：Unit/Word/Grammar/Story/Progress…
-├─ App.tsx                         # 主應用：分頁/子視圖/關卡解鎖/整合 Snake
-├─ main.tsx                        # 入口檔，渲染 App
-└─ index.css                       # Tailwind v4 與自訂樣式
-```
-
----
-
-# 核心功能設計（Features）
-
-## 1) 學習區（6 個單元）
-
-* **單字**：單字集瀏覽（翻面）、4 選 1 小測（由題庫生成器產出）。
-* **文法**：重點說明＋重組句子遊戲；完成加 XP，記錄最佳表現。
-* **課文**：故事閱讀與「句型排列」遊戲；完成加 XP，記錄最高分。
-
-## 2) 挑戰區
-
-* 與單元對應的題庫（每關 10 題）；**60 秒限時**、即時計分；
-* 星等規則（預設：9/7/4 對應 3/2/1 星）；
-* **關卡解鎖**：前一關達 **2 星** 才能解鎖下一關；
-* 可替換某些關卡為 **SnakeChallenge（貪吃蛇）**，與 ChallengeRun 共存。
-
-## 3) 獎章區
-
-* 自動根據進度解鎖徽章（例如：FIRST\_STEPS、SPEEDSTER、PERFECT\_10、UNIT\_MASTER…）；
-* 顯示解鎖狀態、時間戳與說明。
-
----
-
-# 資料驅動與題庫生成
-
-## 單元資料（units.ts）
-
-* 每個 `UnitConfig` 含 `id`、`title`、`words[]`、`grammar[]`、`story{}`：
-
-  * `words[]`：{ term, def, example? }
-  * `grammar[]`：{ point, desc, examples\[] }
-  * `story`：{ title, paragraphs\[], sentencesForArrange\[] }
-* 只要新增/修改 `UNITS` 陣列，即可更換教材與題庫來源（單字小測、文法題、課文題）。
-
-## 題庫生成（questionGen.ts）
-
-* 輸入 `UnitConfig`，輸出 MCQ（單字/文法/課文），並可被 ChallengeRun 組合成每關 10 題的挑戰題庫；
-* 支援解題回饋（explain）與標記（tag）。
-
----
-
-# 進度模型與徽章（state/progress.ts）
-
-* **儲存位置**：`localStorage`，含 `totalXP`、各單元的 XP、星等、最佳成績；
-* **Hook**：`useProgress()` 提供 `progress`、`addXP`、`patchUnit`、`awardBadge`、`reset`；
-* **星等**：由最佳表現推算，可在 `computeStars()` 客製；
-* **徽章規則**：集中於 `evaluateBadges()`（如 PERFECT\_10、SPEEDSTER…）。
-
----
-
-# 主要元件說明（Components）
-
-* **VocabSet**：翻牌瀏覽單字集；可逐字學習，累積「已學」。
-* **VocabQuiz**：單字 4 選 1 測驗；計分與回饋（explain）。
-* **GrammarExplain**：展示文法重點，點擊視為一次「學習」。
-* **ReorderSentenceGame**：將句子打散並重組；完成與否影響 XP 與最佳紀錄。
-* **StoryViewer**：段落式閱讀；完成一次增加閱讀次數與 XP。
-* **ArrangeSentencesGame**：將課文句子排序；使用者得分作為 `arrangeBest`。
-* **ChallengeRun**：標準 4 選 1 限時挑戰（10 題 / 60 秒）；結束回傳 `(score, timeUsed)`；
-
-  * 用於關卡化（每單元 10 關），搭配解鎖條件（2 星解鎖下一關）。
-* **SnakeChallenge**：極簡貪吃蛇（20×20 邏輯格；鍵盤/WASD/行動方向鍵）；
-
-  * Props：`totalTime=60`、`targetScore=10`、`speedMs`、`onFinish(score, time)`；
-  * 可被指定為某些關卡的內容，與 ChallengeRun 混用。
-* **BadgesView**：以格狀卡片顯示已解鎖/未解鎖徽章，若已解鎖顯示時間戳。
-* **ui.tsx**：共用 `Card`、`SectionTitle`、`TabButton` 等樣式組件。
-
----
-
-# App.tsx：版面與體驗
-
-* 頂端三分頁：**學習區** / **挑戰區** / **獎章區**；
-* HUD：顯示目前單元、該單元 XP、總 XP；提供「重置進度」、「如何擴充？」快捷；
-* 單元選擇（共 6）：切換時保留挑戰區解鎖狀態；
-* 挑戰區：
-
-  * 關卡選單（10 關）；
-  * **2 星解鎖**；
-  * 關卡內容可在 **貪吃蛇** 與 **標準 4 選 1** 之間切換；
-  * 完成關卡會呼叫 `onFinish` 更新 XP / 星等 / 徽章。
-
----
-
-# 安裝、開發與部署（Ops）
-
-## 環境需求
-
-* Node.js 20.19+ 或 22.12+。
-
-## 開發命令
-
-```bash
-npm install
-npm run dev      # http://localhost:5173/
-npm run build
-npm run preview
-```
-
-## 部署建議
-
-* **Vercel**：Framework 選 Vite；Build Command `npm run build`；Output `dist`；
-* **Netlify**：Build `npm run build`；Publish `dist`。
-
----
-
-# 客製與延伸（Customization & Roadmap）
-
-## 客製內容
-
-* 在 `src/data/units.ts` 直接換內容：單字、文法點、課文段落與「可排列句子」。
-* 調整挑戰題數、限時、星等門檻：集中於 `ChallengeRun` 與 `App.tsx` 計算函式。
-* 將某些關卡改為小遊戲：以 `SnakeChallenge` 取代個別關卡內容。
-
-## 延伸方向
-
-* **更多小遊戲**：接水果、打地鼠、打字挑戰；以共用 `onFinish(score, time)` 介面接入。
-* **進度雲同步**：以後端 API 或 Supabase 取代 `localStorage`。
-* **題庫管理台**：表單化編輯 `units.ts`，自動產出 PR。
-* **學習分析**：紀錄作答時間、錯題類型，生成精準複習清單。
-* **多語支援**：詞彙與說明以 JSON i18n 管理。
-
----
-
-# Demo 指南（口頭報告用）
-
-1. 進入首頁：說明三分頁與 HUD（單元、XP、重置）。
-2. 切換到 **學習區** → 單字翻牌 → 單字小測；
-3. 切到 **文法** → 簡要說明 → 重組句子（示範一次）；
-4. 切到 **課文** → 閱讀 → 句子排列；
-5. 轉到 **挑戰區**：亮出 10 關格子，說明 **2 星解鎖規則**；
-6. 示範第 2 或 3 關改為 **貪吃蛇**，60 秒 / 10 分為過關門檻；
-7. 完成一關，展示 XP 增加、星等、徽章變化；
-8. 收尾：說明如何在 `units.ts` 替換教材與題庫、自動延展到整站。
-
----
-
-# 附錄：型別與資料結構（摘要）
-
-* `UnitConfig`：`{ id, title, words[], grammar[], story{} }`
-* `Progress`：`totalXP` + `byUnit`（含單字/文法/課文/挑戰子結構：最佳分數/次數）+ `badges{}`
-* `SnakeChallengeProps`：`{ title?, totalTime?, targetScore?, speedMs?, onFinish(score, time) }`
-
-> 本文件可作為說明文件、專案 README 擴充章節，或投影片講稿的基底。
+Wouters, P., van Nimwegen, C., van Oostendorp, H., & van der Spek, E. D. (2013). A meta-analysis of the cognitive and motivational effects of serious games. Journal of Educational Psychology, 105(2), 249–265.（作者上傳全文可公開存取） 
+ResearchGate
