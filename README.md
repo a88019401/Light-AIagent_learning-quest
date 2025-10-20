@@ -36,7 +36,7 @@
 ---
 
 ## 參考文獻（APA 第 7 版）
-Azevedo, R., Harley, J. M., Trevors, G., Duffy, M., Feyzi-Behnagh, R., Bouchet, F., & Landis, R. S. (2009). *Using multiple external representations to support self-regulated learning with MetaTutor*. University of Memphis. https://doi.org/10.5555/1989482.1989492
+Azevedo, R., Witherspoon, A., Graesser, A. C., McNamara, D. S., Chauncey, A., Siler, E., Cai, Z., Rus, V., & Lintean, M. (2009). MetaTutor: Analyzing self-regulated learning in a tutoring system for biology. In V. Dimitrova, R. Mizoguchi, B. du Boulay, & A. C. Graesser (Eds.), Artificial Intelligence in Education: Building Learning Systems that Care: From Knowledge Representation to Affective Modelling (Frontiers in Artificial Intelligence and Applications, Vol. 200, pp. 635–637). IOS Press. https://doi.org/10.3233/978-1-60750-028-5-635
 
 Panadero, E. (2017). A review of self-regulated learning: Six models and four directions for research. *Frontiers in Psychology, 8*, 422. https://doi.org/10.3389/fpsyg.2017.00422
 
